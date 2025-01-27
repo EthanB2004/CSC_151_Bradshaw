@@ -1,8 +1,8 @@
-
 ///author: Ethan Bradshaw
 //date: Jan 27th 2024
 // First Java Programming - Prints Hello World
-import java.util.Scanner;
+
+package labs.example.hello;
 
 public class HelloWorld{
     public static void main(String[] args){
