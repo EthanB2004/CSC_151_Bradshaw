@@ -23,7 +23,7 @@ public class Mammal{
         System.out.println("Mammal is Running");
     }
     public void eat(){
-        System.out.println("Mammal is eating");
+        System.out.println("The " + this.name + "is eating");
     }
     public void sleep(){
         System.out.println("Mammal is now Sleeping");
