@@ -14,6 +14,7 @@ public class Mammal{
     protected Double BodyTemp;
     protected String Age;
     protected String Weight;
+    protected String name;
     protected String HairLength;
     
     
@@ -23,30 +24,61 @@ public class Mammal{
         System.out.println("Mammal is Running");
     }
     public void eat(){
-        System.out.println("The " + this.name + "is eating");
+        System.out.println("The " + this.name + " is eating");
     }
     public void sleep(){
-        System.out.println("Mammal is now Sleeping");
+        System.out.println("The" + this.name + "is now Sleeping");
     }
     public void Scratch(){
-        System.out.println("Mammal is going to Scratch");
+        System.out.println("The" + this.name + " is going to Scratch");
     }
     public void Walk(){
-        System.out.println("Mammal is going for a Walk");
+        System.out.println("The" + this.name + " is going for a Walk");
 
     }
     public void size(){
 
     }
     public void drink(){
-        System.out.println("Mammal is taking a drink break");
+        System.out.println("The" + this.name + " is taking a drink break");
+    }
+    public void stand(){
+        System.out.println("The" + this.name + " is now standing");
+    }
+     public void bark(){
+        System.out.println("woof....wooof....woof");
     }
     public void sit(){
-        System.out.println("Mammal is Sitting for a little bit");
+        System.out.println("The " + this.name + " Is sitting down");
 
-    }
+        try
+        {
+            Thread.sleep(15000);
+        }
+        catch(InterruptedException e)
+        {
+            System.out.println(e);
+        }
+
+        System.out.println("The" + this.name + " is now getting up from their sit");
+        
+        stand();
+        bark();
+    } 
     public void jump(){
-        System.out.println("Mammal is going to jump");
+        System.out.println("The" + this.name + " is going to jump");
     }
-    
+    public void setName(String name) {
+        this.name = name;
+    }    
+
+    public void getMammalDetails(){
+        System.out.println("Hair color "  + this.HairColor);
+        System.out.println("Eye Color " + this.EyeColor);
+        System.out.println("Body Temp " + this.BodyTemp);
+        System.out.println("Age " + this.Age);
+        System.out.println("Weight " + this.Weight);
+        System.out.println("Hair length " + this.HairLength);
+        System.out.println("Name " + this.name);
+    }
 }
