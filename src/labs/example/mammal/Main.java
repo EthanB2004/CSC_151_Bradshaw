@@ -12,6 +12,8 @@ public class Main{
         mammal.eat();
 
         mammal.sit();
+
+        mammal.walk()
         
         
 
