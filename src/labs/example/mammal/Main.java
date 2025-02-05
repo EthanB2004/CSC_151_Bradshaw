@@ -9,11 +9,11 @@ public class Main{
         Mammal mammal = new Mammal();
 
         mammal.setName("Dog");
-        mammal.eat();
+        //mammal.eat();
 
-        mammal.sit();
+        //mammal.sit();
 
-        mammal.walk()
+        System.out.println("The calculated angle is: " +String.format("%.2f",mammal.Walk()) + " degrees.");
         
         
 

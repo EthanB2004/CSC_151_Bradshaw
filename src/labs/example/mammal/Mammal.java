@@ -16,7 +16,7 @@ public class Mammal{
     protected String Weight;
     protected String name;
     protected String HairLength;
-    Int miles;
+    
     
     
 
@@ -33,25 +33,24 @@ public class Mammal{
     public void Scratch(){
         System.out.println("The" + this.name + " is going to Scratch");
     }
-    public Walk(int miles){
-        int south = 3;
-        int east = 3;
-        int miles = 0;
+    public double Walk(){
+        double south = 3;
+        double east = 4;
+        double miles = 0;
         double angle = 0;
         System.out.println("The" + this.name + " is going for a Walk It is headed South"); //Dog be walking
-        Thread.sleep(3000);
+        
         System.out.println("The " +this.name+ " is now headed east, after walking 3 miles.");
-        Thread.sleep(4000);
+        
         System.out.println("The " +this.name+ " is now coming back, after walking 4 miles");
         ///Doing the maths 
 
         miles = Math.pow(3,2) + Math.pow(4,2);
         miles = Math.sqrt(miles);
-        angle = Math.atan2(3,4);
-        System.out.println("The "+this.name+ " is now home after walking " +miles+ "At an angle of " +angle+ "degrees");
-
-
-
+        angle = Math.atan2(south, east);
+        System.out.println("The "+this.name+ " is now home after walking " +miles+ );
+        Double angleInDegrees = Math.toDegrees(angle);
+        return angleInDegrees;
     }
     public void size(){
 
