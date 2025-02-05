@@ -50,7 +50,7 @@ public class Mammal{
         angle = Math.atan2(south, east);
         System.out.println("The "+this.name+ " is now home after walking " +miles+ );
         Double angleInDegrees = Math.toDegrees(angle);
-        return angleInDegrees;
+        return angleInDegrees; 
     }
     public void size(){
 
