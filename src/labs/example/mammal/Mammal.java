@@ -61,9 +61,7 @@ public class Mammal{
     public void stand(){
         System.out.println("The" + this.name + " is now standing");
     }
-     public void bark(){
-        System.out.println("woof....wooof....woof");
-    }
+     
     public void sit(){
         System.out.println("The " + this.name + " Is sitting down");
 
