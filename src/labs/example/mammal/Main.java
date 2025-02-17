@@ -9,9 +9,9 @@ public class Main{
         Mammal mammal = new Mammal();
 
         mammal.setName("Dog");
-       
+       double value = mammal.Walk() 
 
-        //System.out.println("The calculated angle is: " +String.format("%.2f",mammal.Walk()) + " degrees.");
+        System.out.println("The calculated angle is: " +String.format("%.2f",mammal.Walk()) + " degrees.");
         
         
 

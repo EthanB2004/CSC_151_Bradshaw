@@ -59,4 +59,27 @@ public class Physics{
         return pe;
 
     }
+    public double getTheta(double leg1, double leg2){
+        //double miles = 0;
+        double angle = 0;
+        //System.out.println("The" + this.name + " is going for a Walk It is headed South"); //Dog be walking
+        
+        //System.out.println("The " +this.name+ " is now headed east, after walking 3 miles.");
+        
+        //System.out.println("The " +this.name+ " is now coming back, after walking 4 miles");
+        ///Doing the maths 
+
+       // miles = Math.pow(3,2) + Math.pow(4,2);
+        //miles = Math.sqrt(miles);
+        angle = Math.atan2(leg1, leg2);
+        //System.out.println("The "+this.name+ " is now home after walking " +miles+ );
+        Double angleInDegrees = Math.toDegrees(angle);
+        return angleInDegrees;
+    }
+    public void logInvalidAngleInfo(double angle){
+        System.out.println("logging the angle " + String.format("%.2f",angle) + " degrees. This is not a right angle.");
+    }
+    public void logValidInfo(double angle){
+        System.out.println("Logging the angle " + String.format("%.2f",angle) + " degrees. This is a valid 3-4-5 triangle");
+    }
 }
