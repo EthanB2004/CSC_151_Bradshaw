@@ -6,6 +6,18 @@ package labs.example.physics;
 import java.lang.Math;
 
 public class Physics{
+    double lightSpeedMPH = (186282 * 60) * 60;
+    double knownDistanceToEarth = 92947266.72;
+
+    public double getLightSpeed(){
+        return lightSpeedMPH;
+    }
+
+    public double getTimeFromSunToEarthInHours(){
+       double timeFromSun;
+       timeFromSun = knownDistanceToEarth / lightSpeedMPH;
+       return timeFromSun;
+    }
     final static double GRAVITY = 9.81;
     public void Physics(){
         //constructor
@@ -82,4 +94,13 @@ public class Physics{
     public void logValidInfo(double angle){
         System.out.println("Logging the angle " + String.format("%.2f",angle) + " degrees. This is a valid 3-4-5 triangle");
     }
+    public void logEarthToSunInvalidDistance(){
+        System.out.println("Distance to the sun is invalid");
+    }
+
+        public Double getKnownDistanceToEarth(){
+        
+            return knownDistanceToEarth;
+        }
+    
 }

@@ -16,12 +16,23 @@ public class Main{
        // System.out.println("Your Work is: " + physics.getWork(800, 2000) + " Joules"); 
        // System.out.println("Your Kinetic Energy: "+ physics.getKineticEnergy(0.46,3001)+ " Joule"); //Hampter go Boom
        // System.out.println("Your Potential Energy: "+ physics.getPotentialEnergy(0.46,10000) + " Joule"); //Hampter like terminal velocity from space
+       
+       //Lab 1
        double theangle = physics.getTheta(3,4);
        if (theangle > 37 || theangle < 36.87){   
          physics.logValidInfo(theangle);
        }
        else{
         physics.logInvalidAngleInfo(theangle);
+       }
+
+       //Lab 2
+       if(physics.getDistance(physics.getLightSpeed(), physics.getTimeFromSunToEarthInHours()) == physics.getKnownDistanceToEarth()){
+        System.out.println("Distance Matches");
+        
+       }
+       else{
+        physics.logEarthToSunInvalidDistance();
        }
 
     }
