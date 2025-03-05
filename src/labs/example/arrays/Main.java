@@ -10,6 +10,9 @@ public class Main{
     public static void main(String[] args) {
         ArrayOperations arrayOperations = new ArrayOperations();
 
-        arrayOperations.createNewArray(6);
+        //arrayOperations.createNewArray(6);
+
+        //arrayOperations.sortArray();
+        arrayOperations.getDaysAndMonths();
     }
 }
