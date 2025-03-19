@@ -80,4 +80,38 @@ public class ArrayCheck{
         System.out.println("The highest value in the myArray object is: " + highestValue);
 
     }
+
+    public void CreditCardCheck()
+    {
+        int[] creditCardNum = {4,0,1,2,8,8,8,8,8,8,8,8,1,8,8,1};
+        int[] workingCardNum = {4,0,1,2,8,8,8,8,8,8,8,8,1,8,8,1};
+        int numSum = 0;
+
+        for( int i = creditCardNum.length -2; i + 1 > 0; i = i-2)
+        {
+            workingCardNum[i] = creditCardNum[i] * 2;
+
+            if(workingCardNum[i] > 9)
+            {
+                workingCardNum[i] = (workingCardNum[i] % 10) + 1;
+            }
+        } 
+
+        for(int i = 0; i < workingCardNum.length; i++){
+            numSum = workingCardNum[i] + numSum;
+        }
+
+        System.out.print("Credit Card ");
+        for(int i = 0; i < creditCardNum.length; i++){
+            System.out.print(creditCardNum[i]);
+        }
+
+        if((numSum % 10) == 0){
+            System.out.print(" is valid \n");
+        }
+        else{
+            System.out.print(" is not valid \n");
+        }
+
+    }
 }

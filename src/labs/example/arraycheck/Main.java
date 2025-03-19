@@ -10,6 +10,8 @@ public class Main{
 
        // arraycheck.CheckLengthAndValues();
       // arraycheck.comparingSize();
-      arraycheck.HighestValue();
+      //arraycheck.HighestValue();
+
+      arraycheck.CreditCardCheck();
     }
 }
