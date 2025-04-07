@@ -12,14 +12,21 @@ public class Logger{
 
 
     public static void main(String[] args)throws IOException{
-        BufferedReader file = openErrorLog();
+       /* BufferedReader file = openErrorLog();
         //readAPI();
         getCountOfErrorTypes(file);
         file.close();
 
         BufferedReader file2 = openErrorLog();
         getMemoryLimitExceededCount(file2);
-        file2.close();
+        file2.close(); */
+
+       /* BufferedReader file3 = openErrorLog(); //lab 1 week 13
+        getDiskSpaceErrorsWithIPAddress(file3);
+        file3.close(); */
+
+        openErrorLog("http_access.log");
+
 
 
     }
@@ -101,5 +108,23 @@ public class Logger{
             System.out.println(endPoint);
         }
 
+    }
+    private static void getDiskSpaceErrorsWithIPAddress(BufferedReader file)throws IOException{ //Week 13 lab 1
+       ArrayList <String> endPointList = new ArrayList<String>(); 
+       String line = "";
+       int lineNumber = 0;
+
+       while((line = file.readLine()) != null){
+        String[] lineValue = line.split(" ");
+        if(lineValue[5].equals("Disk")){
+            System.out.println("Disk space error on line " +lineNumber + " for IP Address: " +lineValue[3]);
+        }
+        lineNumber = lineNumber + 1;
+       }
+    }
+
+    private static BufferedReader openErrorLog(String filename)throws IOException{
+        BufferedReader br = new BufferedReader(new FileReader(FILE_PATH + "logs/" + filename));
+        return br;
     }
 }
