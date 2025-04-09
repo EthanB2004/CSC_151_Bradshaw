@@ -19,22 +19,31 @@ public class Logger{
 
         BufferedReader file2 = openErrorLog();
         getMemoryLimitExceededCount(file2);
-        file2.close(); */
+        file2.close(); */ //Week 12 
 
-       /* BufferedReader file3 = openErrorLog(); //lab 1 week 13
+       BufferedReader file3 = openErrorLog(); //lab 1 week 13
         getDiskSpaceErrorsWithIPAddress(file3);
-        file3.close(); */
+        file3.close(); 
 
-        // openErrorLog("http_access.log"); //lab 2 week 13
+         openErrorLog("http_access.log"); //lab 2 week 13
 
-       BufferedReader httpHandle = openErrorLog("http_access.log");
-       // getGMTOffset(httpHandle);    //Lab 4 Week 13
+       BufferedReader httpHandle3 = openErrorLog("http_access.log");
+        getGMTOffset(httpHandle3);    //Lab 3 Week 13
+        httpHandle3.close();
 
-        //getHTTPCode(httpHandle);
 
-        //getResponseSizes(httpHandle);
 
-        groupHTTPMethodsAndEndpoints(httpHandle);
+        BufferedReader httpHandle4 = openErrorLog("http_access.log");
+        getHTTPCode(httpHandle4); //lab 4 Week 13
+        httpHandle4.close();
+
+        BufferedReader httpHandle5 = openErrorLog("http_access.log");
+        getResponseSizes(httpHandle5); //lab 5 Week 13
+        httpHandle5.close();
+
+        BufferedReader httpHandle6 = openErrorLog("http_access.log");
+        groupHTTPMethodsAndEndpoints(httpHandle6); //lab 6 Week 13
+        httpHandle6.close();
 
 
 
