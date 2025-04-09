@@ -25,7 +25,16 @@ public class Logger{
         getDiskSpaceErrorsWithIPAddress(file3);
         file3.close(); */
 
-        openErrorLog("http_access.log");
+        // openErrorLog("http_access.log"); //lab 2 week 13
+
+       BufferedReader httpHandle = openErrorLog("http_access.log");
+       // getGMTOffset(httpHandle);    //Lab 4 Week 13
+
+        //getHTTPCode(httpHandle);
+
+        //getResponseSizes(httpHandle);
+
+        groupHTTPMethodsAndEndpoints(httpHandle);
 
 
 
@@ -110,7 +119,6 @@ public class Logger{
 
     }
     private static void getDiskSpaceErrorsWithIPAddress(BufferedReader file)throws IOException{ //Week 13 lab 1
-       ArrayList <String> endPointList = new ArrayList<String>(); 
        String line = "";
        int lineNumber = 0;
 
@@ -123,8 +131,102 @@ public class Logger{
        }
     }
 
-    private static BufferedReader openErrorLog(String filename)throws IOException{
+    private static BufferedReader openErrorLog(String filename)throws IOException{  //Week 13 lab 2
         BufferedReader br = new BufferedReader(new FileReader(FILE_PATH + "logs/" + filename));
         return br;
+    }
+
+    private static void getGMTOffset(BufferedReader file)throws IOException{ //Week 13 lab 3
+       ArrayList <Integer> offsetCountList = new ArrayList<>(); 
+       ArrayList <String> offsetList= new ArrayList<String>(); 
+       String offset = "";
+       String line = "";
+       int index = 0;
+
+       while((line = file.readLine()) != null){
+        String[] lineValue = line.split(" ");
+        offset = lineValue[4].replace("]", "");
+        if(offsetList.contains(offset) == false){
+            offsetList.add(offset);
+            offsetCountList.add(1);
+        }
+        else {
+            index = offsetList.indexOf(offset);
+            offsetCountList.set(index, (offsetCountList.get(index) + 1));
+        }
+
+       }
+
+       for(int i = 0; i < offsetList.size(); i++){
+        System.out.println("Time " + offsetList.get(i) + " Count : "+ offsetCountList.get(i));
+       }
+
+
+    }
+
+    private static void getHTTPCode(BufferedReader file)throws IOException{
+        String line = "";
+        int fiveHundredKCount =0;
+        int fourHundredCount = 0;
+        int twoHundredKCount = 0;
+        int threeHundredKCount = 0;
+
+        while((line = file.readLine()) !=null){
+            String[] lineValue = line.split(" ");
+
+            char[] responseCode = lineValue[8].toCharArray();
+            
+
+            
+            switch(responseCode[0]){
+                case '5':
+                    fiveHundredKCount = fiveHundredKCount + 1;
+                    break;
+                case '2':
+                    twoHundredKCount = twoHundredKCount + 1;
+                    break;
+                case '3':
+                    threeHundredKCount = threeHundredKCount + 1;
+                    break;
+                case '4':
+                    fourHundredCount = fourHundredCount + 1;
+                    break;
+            }
+        }
+        System.out.println("5xx Errors: " + fiveHundredKCount);
+        System.out.println("4xx Errors: " + fourHundredCount);
+        System.out.println("3xx Errors: " + threeHundredKCount);
+        System.out.println("2xx Errors: " + twoHundredKCount);
+    }
+
+    private static void getResponseSizes(BufferedReader file)throws IOException{
+        String line = "";
+        int greaterCount = 0;
+
+        while((line = file.readLine()) != null){
+            String [] lineValue = line.split(" ");
+            if(Integer.parseInt(lineValue[9]) > 3900){
+                greaterCount = greaterCount + 1;
+            }
+        }
+        System.out.println(greaterCount);
+    }
+
+    private static void groupHTTPMethodsAndEndpoints(BufferedReader file)throws IOException{
+        String line = "";
+        ArrayList <String> verbslist = new ArrayList<String>();
+        String verb = "";
+
+        while((line = file.readLine()) != null){
+            String [] lineValue = line.split(" ");
+            verb = lineValue[5].replace("\"", "");
+            if(verbslist.contains(verb) == false){
+                verbslist.add(verb);
+            }
+        }
+        System.out.println("Verbs:");
+        for(int i = 0; i < verbslist.size(); i++){ 
+         System.out.println(" -" + verbslist.get(i) );
+       }
     }
 }
