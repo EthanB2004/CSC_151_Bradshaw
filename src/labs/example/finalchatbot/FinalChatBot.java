@@ -1,5 +1,7 @@
 //Ethan Bradshaw
 //Java
+package labs.example.finalchatbot;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.io.BufferedReader;
@@ -13,92 +15,97 @@ import java.util.Scanner;
 
 public class FinalChatBot {
 
-    private static final String GEMINI_API_URL = "https://api.gemini.com/v1/chat";  // Replace with actual Gemini API URL
+    private static final String apiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+    private final String apiKey;
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String userInput;
-        boolean isRunning = true;  // Control flag for the conversation loop
-        
-        // Start the conversation loop
-        while (isRunning) {
-            // Prompt user for input
-            System.out.print("You: ");
-            userInput = scanner.nextLine();
-            
-            // Check if the user wants to exit the conversation
-            if (userInput.equalsIgnoreCase("exit")) {
-                isRunning = false;  // Set the flag to false to end the loop
-                System.out.println("Goodbye!");
-            } else {
-                // Send the user input to the Gemini API and get the response
-                String response = getGeminiResponse(userInput);
-                
-                // Display the response from Gemini
-                System.out.println("Gemini: " + response);
-            }
-        }
-        
-        scanner.close();  // Close the scanner after the loop ends
+    public FinalChatBot(String apiKey) {
+        this.apiKey = apiKey;
     }
-    
-    private static String getGeminiResponse(String userInput) throws IOException {
-        HttpURLConnection connection = null;
-        String response = "";
-        
-        try {
-            // Create URL object from the URI string
-            URL url = new URL(GEMINI_API_URL);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
+    // Class to handle the Gemini API client
+    public String callChatbotAPI(String userInput) throws IOException, URISyntaxException
+    {
+        try
+        {
+            // Define the API endpoint and the request method
+            String requestMethod = "POST";
+            // Construct the full API endpoint with the API key
+            String fullUrlString = apiEndpoint + "?key=" + apiKey;
+
+            // Create a URI object
+            URL url = new URI(fullUrlString).toURL();
+            // Create a connection object
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod(requestMethod);
+            connection.setRequestProperty("Content-Type", "application/json; utf-8");
+            connection.setRequestProperty("Accept", "application/json");
             connection.setDoOutput(true);
-            
-            // Prepare JSON payload (adjust based on Gemini's API requirements)
-            String jsonPayload = "{\"input\": \"" + userInput + "\"}";  // Example payload, adjust as needed
-            
+
+            // Create the JSON payload
+            String jsonInputString = "{\r\n" +
+                                "    \"contents\": [\r\n" +
+                                "      {\r\n" +
+                                "        \"parts\": [\r\n" +
+                                "          {\r\n" +
+                                "            \"text\": \"" + userInput + "\"" + "\r\n" +
+                                "          }\r\n" +
+                                "        ]\r\n" +
+                                "      }\r\n" +
+                                "    ]\r\n" +
+                                "  }";
+
             // Send the request
             try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = jsonPayload.getBytes(StandardCharsets.UTF_8);
+                byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
                 os.write(input, 0, input.length);
             }
+
+            // Read the response
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8));
+            StringBuilder response = new StringBuilder();
+            String responseLine;
             
-            // Get the response code
-            int responseCode = connection.getResponseCode();
-            
-            // Read the response if the request was successful
-            if (responseCode == HttpURLConnection.HTTP_OK) { // 200 OK
-                try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                    String inputLine;
-                    StringBuilder responseBuilder = new StringBuilder();
-                    while ((inputLine = in.readLine()) != null) {
-                        responseBuilder.append(inputLine);
-                    }
-                    response = parseGeminiResponse(responseBuilder.toString());
-                }
-            } else {
-                response = "Error: Unable to get a valid response from Gemini.";
+            while ((responseLine = br.readLine()) != null) {
+                response.append(responseLine);
             }
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
+            String[] finalResponse = response.toString().split("\"");
+            String finishedResponse = finalResponse[9];
+            return finishedResponse;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
-        return response;
+        return "Error: Unable to get a response from the chatbot API.";
     }
 
-    // Simple method to extract text from Gemini's JSON response (example parsing)
-    private static String parseGeminiResponse(String jsonResponse) {
-        // Assuming the response is something like: {"response": "Hello, how can I help?"}
-        String responseText = "";
-        try {
-            int startIndex = jsonResponse.indexOf("\"response\":") + 12;  // Adjust for actual key in the response
-            int endIndex = jsonResponse.indexOf("\"", startIndex);
-            responseText = jsonResponse.substring(startIndex, endIndex);
-        } catch (Exception e) {
-            responseText = "Error parsing the response.";
+    public static void main(String[] args) {
+        
+        // Create a Scanner object to read user input
+        String apiKey = "AIzaSyCjX69BcKwRdtjj4RWbyFQIJUo83-oZ_gI"; // Replace with your actual API key
+        Scanner scanner = new Scanner(System.in);
+        FinalChatBot apiClient = new FinalChatBot(apiKey);
+        // Check if the scanner is not null
+        while (scanner != null) {
+            System.out.println("Enter 'exit' to quit the program.");
+            // Prompt the user for input
+            System.out.print("You: ");
+            String userInput = scanner.nextLine();
+            
+            // Check if the user wants to exit
+            if (userInput.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting the program.");
+                scanner.close();
+                return; // Exit the program
+            }
+            try {
+                String response = apiClient.callChatbotAPI(userInput);
+                // Print the response from the chatbot
+                System.out.println("Chatbot response: " + response);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (URISyntaxException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
-        return responseText;
     }
 }
